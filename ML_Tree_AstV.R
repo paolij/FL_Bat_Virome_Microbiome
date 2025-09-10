@@ -15,7 +15,6 @@ setwd("/Users/julia/Dropbox/MAVIAN_Lab/Manuscripts/Julia_FL_Bat/Figures_plus_dat
 # Load the tree
 ml_tree <- read.tree("astrovirus_concatenate_fixed.nwk")
 
-
 # Load metadata and prepare image paths
 metadata <- read_csv("mamastrovirus_md.csv") %>%
   mutate(
@@ -33,7 +32,6 @@ img_data <- left_join(tip_positions, metadata, by = c("label" = "full"))
 #Finding Nodes
 which(ml_tree$tip.label == "Ma_Frozen_4|AstV-Ma4-FL-2021|Myotis_austroriparius|USA")
 
-
 # Visualize the rooted tree with bootstrap values as text labels
 q <- ggtree(ml_tree, ladderize = TRUE) +
   geom_nodepoint(aes(subset = !is.na(as.numeric(label)) & as.numeric(label) > 90), 
@@ -43,8 +41,9 @@ q <- ggtree(ml_tree, ladderize = TRUE) +
   geom_tiplab(aes(subset = !node %in% c(28), label = label), size = 10, align = TRUE, offset = 0.15) + # Regular for others
   coord_cartesian(xlim = c(0, max(nodeHeights(ml_tree)) * 1.9))
 q
+
 # MRCA nodes
-subclade1 <- getMRCA(ml_tree, c("MZ218054.1|Bat_astrovirus|Myotis_daubentonii|Denmark", 
+Bat_AstV <- getMRCA(ml_tree, c("MZ218054.1|Bat_astrovirus|Myotis_daubentonii|Denmark", 
                                 "Ma_Frozen_4|AstV-Ma4-FL-2021|Myotis_austroriparius|USA"))
 
 GII <- getMRCA(ml_tree, c("NC_013060.1|Mamastrovirus_9|Homo_sapiens|USA", 
@@ -55,13 +54,12 @@ GI <- getMRCA(ml_tree, c("NC_030922.1|Mamastrovirus_1|Homo_sapiens|India",
 
 # Highlight and label
 q <- q +
-  geom_hilight(node = subclade1, fill = "#4DBBD5", alpha = 0.6) +
+  geom_hilight(node = Bat_AstV, fill = "#4DBBD5", alpha = 0.6) +
   #geom_hilight(node = subclade1, fill = NA, color = "#E64B35", alpha = 1, linewidth = 1) +
   geom_hilight(node = GII, fill = "white", alpha = 0) +
   geom_cladelabel(node = GII, label = "GII", align = TRUE, offset = 2.1, barsize = 3, fontsize = 11) +
   geom_hilight(node = GI, fill = "white", alpha = 0) +
   geom_cladelabel(node = GI, label = "GI", align = TRUE, offset = 2.1, barsize = 3, fontsize = 11)
-
 
 # Get max x position of tips
 tip_x_max <- max(img_data$x, na.rm = TRUE)
@@ -78,6 +76,6 @@ q <- q + geom_image(
 )
 
 # Save final plot
-ggsave("AstV_BatCoV_FL_with_images_concatenated.tiff", plot = q,
+ggsave("AstV_BatCoV_FL_with_images_concatenated.pdf", plot = q,
        width = 55, height = 35, units = "in", dpi = 600, limitsize = FALSE)
 
