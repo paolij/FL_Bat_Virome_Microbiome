@@ -1,5 +1,3 @@
-## R script for visualizing maximum likelihood tree 
-
 # Load libraries
 library(ggtree)
 library(ggimage)
@@ -76,18 +74,14 @@ Rhinacovirus <- getMRCA(ml_tree, c("NC_009988.1|Rhinolophus_bat_coronavirus_HKU2
 Tegacovirus <- getMRCA(ml_tree, c("KC175340.1|Canine_coronavirus|Canis_lupus_familiaris|USA", 
                                   "DQ848678.1|Feline_coronavirus|Felis_catus|United_Kingdom"))
 
-
 Minacovirus <- getMRCA(ml_tree, c("NC_030292.1|Ferret_coronavirus|Mustela_putorius|Netherlands",
                                   "NC_023760.1|Mink_coronavirus_strain_WD1127|Neogale_vison|USA"))
-
 
 Setracovirus <- getMRCA(ml_tree, c("NC_032107.1|NL63-related_bat_coronavirus|Triaenops_afer|Kenya",
                                    "NC_048216.1|NL63-related_bat_coronavirus|Triaenops_afer|Kenya"))
 
-
 Duvinacovirus <- getMRCA(ml_tree, c("NC_028752.1|Camel_alphacoronavirus|Camelus_dromedarius|Saudi_Arabia", 
                                     "NC_002645.1|Human_coronavirus_229E|Homo_sapiens|NA"))
-
 
 Minunacovirus <- getMRCA(ml_tree, c("NC_010437.1|Bat_coronavirus_1A|Miniopterus_sp|Hong_Kong", 
                                     "NC_010438.1|Miniopterus_bat_coronavirus_HKU8|Miniopterus_sp|Hong_Kong"))
@@ -95,17 +89,14 @@ Minunacovirus <- getMRCA(ml_tree, c("NC_010437.1|Bat_coronavirus_1A|Miniopterus_
 Nyctacovirus <- getMRCA(ml_tree, c("NC_046964.1|Alphacoronavirus_Bat-CoV/P.kuhlii/Italy/3398-19/2015|Pipistrellus_kuhlii|Italy", 
                                    "MK720944.1|Tylonycteris_bat_coronavirus_HKU33|Tylonycteris_robustula|China"))
 
-
 Decacovirus <- getMRCA(ml_tree, c("NC_028814.1|BtRf-AlphaCoV/HuB2013|Rhinolophus_ferrumequinum|China", 
                                   "NC_018871.1|Rousettus_bat_coronavirus_HKU10|Rousettus_leschenaulti|China"))
-
 
 Pedacovirus <- getMRCA(ml_tree, c("NC_003436.1|Porcine_epidemic_diarrhea_virus|Sus_scrofa|NA", 
                                  "NC_009657.1|Scotophilus_bat_coronavirus_512|Scotophilus_kuhlii|China"))
 
 Unclassified <- getMRCA(ml_tree, c("MZ081397.1|Alphacoronavirus_bat/Yunnan/MlYN20/2020|Myotis_laniger|China", 
                                    "OL410607.1|Eptesicus_bat_coronavirus|Eptesicus_fuscus|USA"))
-
 
 # Get node numbers for single tips
 Soracovirus    <- which(ml_tree$tip.label == "KY370053.1|Common_shrew_coronavirus_Tibet-2014|Sorex_araneus|China")
@@ -151,8 +142,6 @@ q <- q +
   geom_cladelabel(node = Unclassified, label = "Unclassified Bat AlphaCoV", align = TRUE, offset = 1.8, barsize = 3, fontsize = 11) +
   geom_cladelabel(node = Sunacovirus, label = "Sunacovirus", align = TRUE, offset = 1.8, barsize = 3, fontsize = 11) 
 
-
-
 # Save final plot
-ggsave("AlphaCoV_concatenate.tiff", plot = q,
+ggsave("AlphaCoV_concatenate.pdf", plot = q,
        width = 55, height = 35, units = "in", dpi = 600, limitsize = FALSE)
