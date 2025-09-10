@@ -15,7 +15,6 @@ ggtree(ml_tree,ladderize = TRUE) +
 #Finding Nodes
 which(ml_tree$tip.label == "HVLV2-Tb15-FL-2024|USA|2024")
 
-
 # Visualize the rooted tree with bootstrap values as text labels
 q <- ggtree(ml_tree, ladderize = TRUE) +
   geom_nodepoint(aes(subset = !is.na(as.numeric(label)) & as.numeric(label) > 90), 
@@ -23,26 +22,15 @@ q <- ggtree(ml_tree, ladderize = TRUE) +
   geom_treescale(x=0.07, y=35, color='black', fontsize = 15, linesize = 3) +
   geom_tiplab(aes(subset = node %in% c(4), label = label), size = 10, align = TRUE, offset = 0.0005, fontface = 'bold', color = "black") +  
   geom_tiplab(aes(subset = !node %in% c(4), label = label), size = 10, align = TRUE, offset = 0.0005) + # Regular for others
-  #geom_tippoint(size = 15.0, color = "black") +
   coord_cartesian(xlim = c(0, max(nodeHeights(ml_tree)) * 1.9))
 q
 
-
-# MRCA nodes
-#subclade1 <- getMRCA(ml_tree, c("OM817543.1|USA|2020", "KX883772.1|China|2013"))
-
-
-# # Highlight and label
-# q <- q +
-#   geom_hilight(node = subclade1, fill = "#4DBBD5", alpha = 0.4) 
-
 # Load metadata
-metadata <- read.csv('metadata.csv', header = TRUE)
-unique(metadata$Accession_short)
+metadata <- read.csv('HVLV2_metadata.csv', header = TRUE)
 unique(metadata$Accession)
 unique(metadata$Country)
-unique(metadata$host)
-unique(metadata$date)
+unique(metadata$Host)
+unique(metadata$Date)
 
 # Define colors for bathost
 mycolor <- c("Tadarida brasiliensis" = "#AD002A", "Culex tarsalis" = "#42B540", "Culex erythrothorax" = "#925E9F", "Culex sp." = "#FDAF91", "Culicidae sp." = "#FFDC91" )
@@ -50,7 +38,7 @@ mycolor <- c("Tadarida brasiliensis" = "#AD002A", "Culex tarsalis" = "#42B540", 
 
 # Plot with metadata
 p <- q %<+% metadata + 
-  geom_tippoint(aes(color = host), size = 10.0) + 
+  geom_tippoint(aes(color = Host), size = 10.0) + 
   scale_color_manual(values = mycolor) + 
   theme(legend.position = 'left', 
         legend.text = element_text(size = 40),  # Adjust text size
@@ -60,4 +48,4 @@ p <- q %<+% metadata +
 
 
 # Save the plot
-ggsave("Hubei_no_outgroup_concatenate.pdf", width = 55, height = 15, units = "in", dpi = 600, limitsize = FALSE)
+ggsave("HVLV2_ML_concatenate.pdf", width = 55, height = 15, units = "in", dpi = 600, limitsize = FALSE)
